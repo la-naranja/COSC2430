@@ -4,7 +4,7 @@ let currentPage = 1;
 let vendors = [];
 
 async function callAPI(method, url, onSuccess) {
-  const host = "http://php-online-shopping-backend.herokuapp.com/api/";
+  const host = "http://127.0.0.1:8000/api/";
   const xhttp = new XMLHttpRequest();
   const apiUrl = `${host}${url}`;
   xhttp.onreadystatechange = function () {

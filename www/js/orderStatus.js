@@ -1,4 +1,4 @@
-const host = "http://php-online-shopping-backend.herokuapp.com/api/";
+const host = "http://127.0.0.1:8000/api/";
 const maxItemPerPage = 2;
 let currentPage = 1;
 let vendors = [];

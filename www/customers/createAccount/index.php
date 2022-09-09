@@ -82,7 +82,7 @@
       </div>
     </div>
     <script src="../../constant/apiServices.js"></script>
-    <script src="../../css/bootstrap.bundle.min.js"></script>
+    <script src="../../js/bootstrap.bundle.min.js"></script>
     <script src="../../js/createCustomerAccount.js"></script>
 
   </body>

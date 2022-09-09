@@ -56,14 +56,14 @@ function createAccount(e) {
   if (pwConfirm !== pw) {
     console.log(pwConfirm, pw);
     status = false;
-    error += `Password and Confrim Password not match <br>`;
+    error += `Password and Confirm Password not match <br>`;
   }
 
   if (!patternAddress.test(address)) {
     let element = document.getElementById("inputAddress");
     element.classList.add("border-danger");
     status = false;
-    error += `Adress less than 5 characters`;
+    error += `Address must be at least 5 characters`;
   } else {
     let element = document.getElementById("inputAddress");
     element.classList.remove("border-danger");

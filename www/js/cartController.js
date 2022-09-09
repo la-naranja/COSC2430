@@ -269,7 +269,7 @@ async function checkout() {
     }),
   };
 
-  let url = `http://php-online-shopping-backend.herokuapp.com//api/api/order`;
+  let url = `http://127.0.0.1:8000//api/api/order`;
   let http = createCORSRequest("post", url);
   http.open("POST", url);
   http.send(JSON.stringify(body)); // Make sure to stringify

@@ -1,4 +1,4 @@
-const apiHost = "http://php-online-shopping-backend.herokuapp.com";
+const apiHost = "http://127.0.0.1:8000";
 const host = `${apiHost}/api/`;
 
 async function callAPI(method, url, onSuccess = () => {}) {
