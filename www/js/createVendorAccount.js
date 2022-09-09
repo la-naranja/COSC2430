@@ -117,6 +117,9 @@ function createAccount(e) {
           if (res.code === 13) {
             document.getElementById("error").innerHTML = res.message;
           }
+          if (res.code === 2) {
+                document.getElementById("error").innerHTML = res.message;
+            }
           if (res.status) {
             document.getElementById("error").innerHTML = "";
             window.location.replace(`http://${window.location.host}/vendors/login`);

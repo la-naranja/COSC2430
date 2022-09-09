@@ -73,7 +73,7 @@ function createAccount(e) {
     document.getElementById("error").innerHTML = error;
   } else {
     try {
-      var xhr = createCORSRequest("post", `${host}product`);
+      var xhr = createCORSRequest("post", `${host}customer`);
       xhr.addEventListener(
         "progress",
         function (e) {
@@ -110,11 +110,11 @@ function createAccount(e) {
           }
           if (res.status) {
             document.getElementById("error").innerHTML = "";
-            alert("Create success");
+              window.location.replace(`http://${window.location.host}/customers/login`);
           }
         }
       };
-      xhr.open("POST", `${host}customer`, true);
+      //xhr.open("POST", `${host}customer`, true);
       var formData = new FormData();
       formData.append("Username", username);
       formData.append("Password", pw);

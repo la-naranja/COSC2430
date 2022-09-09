@@ -26,7 +26,7 @@
                         <div class="d-flex">
                             <input id="search-input" class="form-control me-2" type="search" placeholder="Search"
                                 aria-label="Search">
-                            <input id="minPrice-input" class="form-control me-2" type="number" placeholder="Min Price"
+                            <input id="minPrice-input" class="form-control me-2" min="0" type="number" placeholder="Min Price"
                                 aria-label="MinPrice">
                             <input id="maxPrice-input" class="form-control me-2" type="number" placeholder="Max Price"
                                 aria-label="MaxPrice">
@@ -58,7 +58,7 @@
     <script src="../js/customers.js"></script>
     <script src="../js/cartController.js"></script>
     <script src="../js/helpers.js"></script>
-    
+
 </body>
 
 </html>
