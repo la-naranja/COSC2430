@@ -64,7 +64,7 @@ class ProductController
 
         $uploadedProductPhoto = $_FILES["ProductPhoto"];
         $targetFile =  $targetDir.basename($uploadedProductPhoto["name"]);
-        $imagePath =  "http://".$_SERVER['SERVER_NAME'].$TARGET_PRODUCT_PHOTO_DIR.$productName."/".basename($uploadedProductPhoto["name"]);
+        $imagePath =  "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_PRODUCT_PHOTO_DIR.$productName."/".basename($uploadedProductPhoto["name"]);
 
         $error = saveUploadedFile($uploadedProductPhoto,$targetDir);
         if ($error != ""){

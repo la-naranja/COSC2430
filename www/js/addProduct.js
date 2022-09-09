@@ -12,7 +12,7 @@ function createCORSRequest(method, url) {
 }
 
 function _addProduct(e) {
-  const host = "https://php-online-shopping-backend.herokuapp.com/api/";
+  const host = "http://127.0.0.1:8000/api/";
 
   let name = document.getElementById("inputName").value;
   let price = document.getElementById("inputPrice").value;

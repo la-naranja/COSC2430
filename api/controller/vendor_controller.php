@@ -53,7 +53,7 @@ class VendorController
         $name = $_POST["BusinessName"];
         $password = $_POST["Password"];
         $address = $_POST["BusinessAddress"];
-        $imagePath = "http://".$_SERVER['SERVER_NAME'].$TARGET_VENDOR_PHOTO_DIR .$DEFAULT_AVATAR_PROFILE_PHOTO;
+        $imagePath = "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_VENDOR_PHOTO_DIR .$DEFAULT_AVATAR_PROFILE_PHOTO;
         $password = hashPassword($password);
     
 
@@ -69,7 +69,7 @@ class VendorController
     
             $uploadedProfilePhoto = $_FILES["ProfilePhoto"];
             $targetFile =  $targetDir.basename($uploadedProfilePhoto["name"]);
-            $imagePath =  "http://".$_SERVER['SERVER_NAME'].$TARGET_VENDOR_PHOTO_DIR .$username."/".basename($uploadedProfilePhoto["name"]);
+            $imagePath =  "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_VENDOR_PHOTO_DIR .$username."/".basename($uploadedProfilePhoto["name"]);
     
             $error = saveUploadedFile($uploadedProfilePhoto,$targetDir);
             if ($error != ""){

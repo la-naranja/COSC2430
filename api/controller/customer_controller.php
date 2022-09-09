@@ -53,7 +53,7 @@ class CustomerController
         $name = $_POST["Name"];
         $password = $_POST["Password"];
         $address = $_POST["Address"];
-        $imagePath = "http://".$_SERVER['SERVER_NAME'].$TARGET_CUSTOMER_PHOTO_DIR.$DEFAULT_AVATAR_PROFILE_PHOTO;
+        $imagePath = "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_CUSTOMER_PHOTO_DIR.$DEFAULT_AVATAR_PROFILE_PHOTO;
         $password = hashPassword($password);
     
 
@@ -69,7 +69,7 @@ class CustomerController
     
             $uploadedProfilePhoto = $_FILES["ProfilePhoto"];
             $targetFile =  $targetDir.basename($uploadedProfilePhoto["name"]);
-            $imagePath =  "http://".$_SERVER['SERVER_NAME'].$TARGET_CUSTOMER_PHOTO_DIR.$username."/".basename($uploadedProfilePhoto["name"]);
+            $imagePath =  "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_CUSTOMER_PHOTO_DIR.$username."/".basename($uploadedProfilePhoto["name"]);
     
             $error = saveUploadedFile($uploadedProfilePhoto,$targetDir);
             if ($error != ""){

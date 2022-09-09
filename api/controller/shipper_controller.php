@@ -51,7 +51,7 @@ class ShipperController
         $username = $_POST["Username"];
         $distributionHubID = (int) $_POST["DistributionHubID"];
         $password = $_POST["Password"];
-        $imagePath = "http://".$_SERVER['SERVER_NAME'].$TARGET_SHIPPER_PHOTO_DIR.$DEFAULT_AVATAR_PROFILE_PHOTO;
+        $imagePath = "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_SHIPPER_PHOTO_DIR.$DEFAULT_AVATAR_PROFILE_PHOTO;
         $password = hashPassword($password);
     
 
@@ -67,7 +67,7 @@ class ShipperController
     
             $uploadedProfilePhoto = $_FILES["ProfilePhoto"];
             $targetFile =  $targetDir.basename($uploadedProfilePhoto["name"]);
-            $imagePath =  "http://".$_SERVER['SERVER_NAME'].$TARGET_SHIPPER_PHOTO_DIR.$username."/".basename($uploadedProfilePhoto["name"]);
+            $imagePath =  "http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$TARGET_SHIPPER_PHOTO_DIR.$username."/".basename($uploadedProfilePhoto["name"]);
     
             $error = saveUploadedFile($uploadedProfilePhoto,$targetDir);
             if ($error != ""){

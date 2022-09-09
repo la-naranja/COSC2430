@@ -1,5 +1,5 @@
 function createAccount(e) {
-  const host = "https://php-online-shopping-backend.herokuapp.com/api/";
+  const host = "http://127.0.0.1:8000/api/";
   var pattern = /^[a-zA-Z0-9_ ]{5,}$/i;
   var patternAddress = /^[a-zA-Z0-9_ ]{5,}$/i;
   var patternUsern = /^[a-zA-Z0-9_]{8,15}$/i;
