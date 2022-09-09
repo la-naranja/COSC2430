@@ -19,11 +19,6 @@ function validateUploadedFile($targetDir, $fileInputName) {
         return errorResponse($INVALID_FILE_ERROR_CODE);
     }
 
-    // Check file size
-    if ($file["size"] > $MAX_UPLOAD_FILE_SIZE) {
-        return errorResponse($LARGE_FILE_ERROR_CODE);
-    }
-
     // Allow certain file formats
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
         return errorResponse($INVALID_IMAGE_TYPE_ERROR_CODE);
