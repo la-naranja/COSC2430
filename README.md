@@ -15,6 +15,7 @@
 * Install required tools
     * PHP (>= 7.0): https://www.php.net/downloads.php
     * Postman (for testing web service in PHP): https://www.postman.com/downloads/
+    * SQLite: https://www.sqlite.org/download.html
 * Clone the project this project using the following commands:
 ```
 https://github.com/llstyl1hs/COSC2430.git
