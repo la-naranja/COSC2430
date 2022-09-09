@@ -22,7 +22,11 @@ https://github.com/llstyl1hs/COSC2430.git
 ```
 
 ### Run the back-end application
-
+* The api requires the sqlite driver. Please check `php.ini` in the location where you've installed PHP to see if there is `;` before the following settings. If so, please remove them.
+```
+extension=php_pdo_sqlite.dll
+extension=php_sqlite3.dll
+```
 * Go the the location where the project is cloned and run the following command
 ```
 cd api
