@@ -17,7 +17,7 @@
     * Postman (for testing web service in PHP): https://www.postman.com/downloads/
 * Clone the project this project using the following commands:
 ```
-https://github.com/michael-loc009/php-online-shopping-web-app.git
+https://github.com/llstyl1hs/COSC2430.git
 ```
 
 ### Run the back-end application
@@ -31,7 +31,7 @@ php -S 127.0.0.1:8001
 * Open postman application and imports the following files in the **docs/postman** folder:
     * PHP Online Shop API.postman_collection.json
     * [Local] PHP Online Shopping API.postman_environment.json
-* If successful, you will get this response when running the url http://127.0.0.1:8000/api/api/orderStatus
+* If successful, you will get this response when running the url http://127.0.0.1:8001/api/api/orderStatus
 
 ```
 [
@@ -53,7 +53,7 @@ php -S 127.0.0.1:8001
 
 * Go the the location where the project is cloned and run the following command
 ```
-cd public
+cd www
 php -S 127.0.0.1:8000
 ```
 
