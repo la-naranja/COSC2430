@@ -55,7 +55,7 @@ php -S 127.0.0.1:8000
 * Go the the location where the project is cloned and run the following command
 ```
 cd www
-php -S 127.0.0.1:8000
+php -S 127.0.0.1:8001
 ```
 
 * Go the link to open the web application: [http:// 127.0.0.1:8001](http://127.0.0.1:8001) 
