@@ -13,7 +13,7 @@
 ### Configure Application
 
 * Install required tools
-    * PHP (>= 7.0): https://sourceforge.net/projects/wampserver
+    * PHP (7.4.26): https://sourceforge.net/projects/wampserver
     * Postman (for testing web service in PHP): https://www.postman.com/downloads/
 * Go to `/wam64/www` folder
 * Clone the project this project using the following commands:
@@ -58,7 +58,7 @@ cd www
 php -S 127.0.0.1:8001
 ```
 
-* Go the link to open the web application: [http:// 127.0.0.1:8001](http://127.0.0.1:8001) 
+* Go the link to open the web application: [http://127.0.0.1:8001](http://127.0.0.1:8001) 
 
 * If successful, you should see the index page as belows:
 ![Example index page](docs/index_example.png)
