@@ -253,11 +253,11 @@
 							"key": "ProfilePhoto",
 							"description": "optional",
 							"type": "file",
-							"src": "/C:/Users/DEEL/OneDrive/Documents/Assignment/Software Development/1988044-Nguyen_Dinh_Loc-QLNV-4/Dich_vu_Du_lieu/Media/NV_1.png"
+							"src": "/C:/Users/DEEL/OneDrive/Documents/1988044-Nguyen_Dinh_Loc-QLHS-4/MEDIA/hoc_sinh_2.png"
 						},
 						{
 							"key": "Username",
-							"value": "luckystar135",
+							"value": "luckystar1356",
 							"type": "text"
 						},
 						{
@@ -267,18 +267,20 @@
 						},
 						{
 							"key": "CustomerID",
-							"value": "5",
+							"value": "2",
 							"type": "text"
 						},
 						{
 							"key": "ShipperID",
 							"value": "1",
-							"type": "text"
+							"type": "text",
+							"disabled": true
 						},
 						{
 							"key": "VendorID",
-							"value": "1",
-							"type": "text"
+							"value": "5",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -560,7 +562,7 @@
 					"formdata": [
 						{
 							"key": "Name",
-							"value": "Motobike Super",
+							"value": "Macbook Pro",
 							"description": "Required, 10 to 20 characters, Unique",
 							"type": "text"
 						},
@@ -572,7 +574,7 @@
 						},
 						{
 							"key": "Price",
-							"value": "30000",
+							"value": "1199",
 							"description": "greater than zero",
 							"type": "text"
 						},
@@ -580,7 +582,7 @@
 							"key": "ProductPhoto",
 							"description": "required",
 							"type": "file",
-							"src": "/C:/Users/DEEL/OneDrive/Documents/Online Shop/bike.jpg"
+							"src": "/C:/Users/DEEL/OneDrive/Documents/Online Shop/macbook_pro.jpg"
 						}
 					]
 				},
@@ -788,103 +790,6 @@
 					],
 					"cookie": [],
 					"body": "[\n    {\n        \"ProductID\": 14,\n        \"Name\": \"Playstation 5\",\n        \"ImagePath\": \"http://127.0.0.1/assets/products/Playstation 5/playstation_5.jpg\",\n        \"UpdatedAt\": \"2022-09-01T13:37:46Z\",\n        \"CreatedAt\": \"2022-09-01T13:37:46Z\",\n        \"Price\": 399.99,\n        \"Description\": \"The PS5 console unleashes new gaming possibilities that you never anticipated. Experience lightning fast loading with an ultra-high speed SSD, deeper immersion with support for haptic feedback, adaptive triggers, and 3D Audio*, and an all-new generation of incredible PlayStation games. *3D audio via built-in TV speakers or analog/USB stereo headphones. Set up and latest system software update required.\"\n    }\n]"
-				}
-			]
-		},
-		{
-			"name": "Delete Product",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"ProductID\": 14\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/product",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"product"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Delete Product",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"ProductID\": 14\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/product",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"product"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Host",
-							"value": "127.0.0.1:8000"
-						},
-						{
-							"key": "Date",
-							"value": "Thu, 01 Sep 2022 13:41:09 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "PHP/7.3.21"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=UTF-8"
-						},
-						{
-							"key": "Access-Control-Allow-Methods",
-							"value": "OPTIONS,GET,POST,PUT,DELETE"
-						},
-						{
-							"key": "Access-Control-Max-Age",
-							"value": "3600"
-						},
-						{
-							"key": "Access-Control-Allow-Headers",
-							"value": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"status\": true\n}"
 				}
 			]
 		},
@@ -1118,103 +1023,6 @@
 			]
 		},
 		{
-			"name": "Delete Customer",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"CustomerID\": 4\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/customer",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"customer"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Delete Customer",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"CustomerID\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/customer",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"customer"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Host",
-							"value": "127.0.0.1:8000"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 02 Sep 2022 09:18:25 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "PHP/7.3.21"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=UTF-8"
-						},
-						{
-							"key": "Access-Control-Allow-Methods",
-							"value": "OPTIONS,GET,POST,PUT,DELETE"
-						},
-						{
-							"key": "Access-Control-Max-Age",
-							"value": "3600"
-						},
-						{
-							"key": "Access-Control-Allow-Headers",
-							"value": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"status\": true\n}"
-				}
-			]
-		},
-		{
 			"name": "Add Vendor",
 			"request": {
 				"method": "POST",
@@ -1370,13 +1178,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/api/customer",
+					"raw": "{{host}}/api/vendors",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
-						"customer"
+						"vendors"
 					]
 				}
 			},
@@ -1440,103 +1248,6 @@
 					],
 					"cookie": [],
 					"body": "[\n    {\n        \"VendorID\": 1,\n        \"Username\": \"luckystar1356\",\n        \"BusinessName\": \"Sony Incb\",\n        \"ProfilePhoto\": \"http://127.0.0.1/assets/vendors/default_avatar.jpg\",\n        \"UpdatedAt\": \"2022-09-02T10:48:14Z\",\n        \"CreatedAt\": \"2022-09-02T10:48:14Z\",\n        \"BusinessAddress\": \"167 Duong so 1 phuong 13 quan Go Vapf\"\n    }\n]"
-				}
-			]
-		},
-		{
-			"name": "Delete Vendor",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"VendorID\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/vendor",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"vendor"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Delete Vendor",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"VendorID\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/vendor",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"vendor"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Host",
-							"value": "127.0.0.1:8000"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 02 Sep 2022 10:50:05 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "PHP/7.3.21"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=UTF-8"
-						},
-						{
-							"key": "Access-Control-Allow-Methods",
-							"value": "OPTIONS,GET,POST,PUT,DELETE"
-						},
-						{
-							"key": "Access-Control-Max-Age",
-							"value": "3600"
-						},
-						{
-							"key": "Access-Control-Allow-Headers",
-							"value": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"status\": true\n}"
 				}
 			]
 		},
@@ -1759,110 +1470,13 @@
 			]
 		},
 		{
-			"name": "Delete Shipper",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"ShipperID\": 3\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/shipper",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"shipper"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Delete Shipper",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"ShipperID\": 2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/shipper",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"shipper"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Host",
-							"value": "127.0.0.1:8000"
-						},
-						{
-							"key": "Date",
-							"value": "Fri, 02 Sep 2022 15:08:07 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "PHP/7.3.21"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=UTF-8"
-						},
-						{
-							"key": "Access-Control-Allow-Methods",
-							"value": "OPTIONS,GET,POST,PUT,DELETE"
-						},
-						{
-							"key": "Access-Control-Max-Age",
-							"value": "3600"
-						},
-						{
-							"key": "Access-Control-Allow-Headers",
-							"value": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"status\": true\n}"
-				}
-			]
-		},
-		{
 			"name": "Add Order",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"CustomerID\": 5,\r\n    \"Total\": 399.99,\r\n    \"OrderItems\": [\r\n        {\r\n            \"ProductID\": 16,\r\n            \"Quantity\": 1\r\n        }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"CustomerID\": 1,\r\n    \"Total\": 399.99,\r\n    \"OrderItems\": [\r\n        {\r\n            \"ProductID\": 1,\r\n            \"Quantity\": 1\r\n        }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -2044,110 +1658,13 @@
 			]
 		},
 		{
-			"name": "Delete Order",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"OrderID\": 5\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{host}}/api/order",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"order"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Delete Order",
-					"originalRequest": {
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"OrderID\": 1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host}}/api/order",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"api",
-								"order"
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Host",
-							"value": "127.0.0.1:8000"
-						},
-						{
-							"key": "Date",
-							"value": "Sat, 03 Sep 2022 09:12:58 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "close"
-						},
-						{
-							"key": "X-Powered-By",
-							"value": "PHP/7.3.21"
-						},
-						{
-							"key": "Access-Control-Allow-Origin",
-							"value": "*"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=UTF-8"
-						},
-						{
-							"key": "Access-Control-Allow-Methods",
-							"value": "OPTIONS,GET,POST,PUT,DELETE"
-						},
-						{
-							"key": "Access-Control-Max-Age",
-							"value": "3600"
-						},
-						{
-							"key": "Access-Control-Allow-Headers",
-							"value": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"status\": true\n}"
-				}
-			]
-		},
-		{
 			"name": "Update Order Status",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"OrderID\": 6,\r\n    \"OrderStatusID\": 2\r\n}",
+					"raw": "{\r\n    \"OrderID\": 1,\r\n    \"OrderStatusID\": 2\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
