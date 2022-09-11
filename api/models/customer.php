@@ -10,140 +10,113 @@ class Customer
         $this->db = $db;
     }
 
-
-    public function findAll(){
-        $query = "SELECT * FROM Customer";
-
-        try {
-            $result = $this->db->query($query);
-            $customerList = array();
-
-            while($row =  $result->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $customer = array(
-                    "CustomerID" => (int) $row["CustomerID"] ,
-                    "Username" => $row["Username"],
-                    "Name" => $row["Name"],
-                    "ProfilePhoto" => $row["ProfilePhoto"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "Address" => $row["Address"]
-                );
-                $customerList[] = $customer;
-             }
-
-            return $customerList;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
-
-    public function findByUsername($username){
-        $query = "SELECT * FROM Customer WHERE Username = :Username";
-
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":Username" => $username]);
-
-            $customer = array();
-
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $customer = array(
-                    "Username" => $row["Username"],
-                    "Password" => $row["Password"],
-                    "CustomerID" => (int) $row["CustomerID"],
-                    "Name" => $row["Name"],
-                    "ProfilePhoto" => $row["ProfilePhoto"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "Address" => $row["Address"]
-                );
-             }
-
-            return $customer;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
-
-    public function findByCustomerID($customerID){
-        $query = "SELECT * FROM Customer WHERE CustomerID = :CustomerID";
-
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":CustomerID" => $customerID]);
-
-            $customer = array();
-
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $customer = array(
-                    "CustomerID" => $row["CustomerID"],
-                );
-             }
-
-            return $customer;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
-
-    public function create($username,$password,$name,$profilePhoto,$address)
+    public function findAll()
     {
+        global $CUSTOMER_TYPE;
+        $customerList = array();
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $CUSTOMER_TYPE) {
+                continue;
+            }
+            $customer = json_decode($val[2], true);
+
+            unset($customer["Password"]);
+
+            $customerList[] = $customer;
+        }
+
+        return $customerList;
+
+    }
+
+    public function findByUsername($username)
+    {
+        global $CUSTOMER_TYPE;
+
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $CUSTOMER_TYPE) {
+                continue;
+            }
+
+            $customer = json_decode($val[2], true);
+
+            if ($customer["Username"] == $username) {
+                return $customer;
+            }
+        }
+    }
+
+    public function findByCustomerID($customerID)
+    {global $CUSTOMER_TYPE;
+
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $CUSTOMER_TYPE) {
+                continue;
+            }
+
+            $customer = json_decode($val[2], true);
+
+            if ($customer["CustomerID"] == $customerID) {
+                unset($customer["Password"]);
+                return $customer;
+            }
+        }
+    }
+
+    public function create($username, $password, $name, $profilePhoto, $address)
+    {
+        global $ACCOUNT_DATA_PATH, $CUSTOMER_TYPE;
+
         $currentDateTime = gmdate("Y-m-d\TH:i:s\Z");
 
-        $query = "INSERT INTO Customer(Username,Password,ProfilePhoto,Name,Address,CreatedAt,UpdatedAt) VALUES(:Username,:Password,:ProfilePhoto,:Name,:Address,:CreatedAt,:UpdatedAt)";
+        $customerID = count($this->db) + 1;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Username", $username);
-            $stmt->bindValue(":Password", $password);
-            $stmt->bindValue(":Name", $name);
-            $stmt->bindValue(":UpdatedAt", $currentDateTime);
-            $stmt->bindValue(":CreatedAt", $currentDateTime);
-            $stmt->bindValue(":Address", $address);
-            $stmt->bindValue(":ProfilePhoto", $profilePhoto);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        $newCustomer = array(
+            "CustomerID" => $customerID,
+            "Username" => $username,
+            "Password" => $password,
+            "Name" => $name,
+            "UpdatedAt" => $currentDateTime,
+            "CreatedAt" => $currentDateTime,
+            "Address" => $address,
+            "ProfilePhoto" => $profilePhoto,
+        );
+
+        $this->db[] = array($customerID, $CUSTOMER_TYPE, json_encode($newCustomer));
+
+        $rs = addDataToCsvFile($ACCOUNT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 
-    public function delete($customerID){
-        $query = "DELETE FROM Customer WHERE CustomerID = :CustomerID";
+    public function update($username, $profilePhotoPath)
+    {
+        global $ACCOUNT_DATA_PATH, $CUSTOMER_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":CustomerID", $customerID);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $CUSTOMER_TYPE) {
+                continue;
+            }
 
-    public function update($username, $profilePhotoPath){
-        $query = "UPDATE Customer SET ProfilePhoto = :ProfilePhoto WHERE Username = :Username";
+            $customer = json_decode($val[2], true);
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Username", $username);
-            $stmt->bindValue(":ProfilePhoto", $profilePhotoPath);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($customer["Username"] == $username) {
+                $customer["ProfilePhoto"] = $profilePhotoPath;
+                $this->db[$key] = array($val[0],$CUSTOMER_TYPE, json_encode($customer));
+                break;
+            }
+        }
+
+        $rs = addDataToCsvFile($ACCOUNT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 }

@@ -7,6 +7,14 @@ $TARGET_VENDOR_PHOTO_DIR = "/assets/vendors/";
 $TARGET_SHIPPER_PHOTO_DIR = "/assets/shippers/";
 $DEFAULT_AVATAR_PROFILE_PHOTO = "default_avatar.jpg";
 
+$ACCOUNT_DATA_PATH = "../db/accounts.csv";
+$PRODUCT_DATA_PATH = "../db/products.csv";
+$ORDER_DATA_PATH = "../db/orders.csv";
+
+$CUSTOMER_TYPE = "customer";
+$VENDOR_TYPE = "vendor";
+$SHIPPER_TYPE = "shipper";
+
 $DEFAULT_SERVER_URL = "php-online-shopping-backend.herokuapp.com";
 
 $ORDER_ACTIVE_STATUS = 1;

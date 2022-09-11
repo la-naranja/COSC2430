@@ -12,135 +12,107 @@ class Shipper
 
 
     public function findAll(){
-        $query = "SELECT * FROM Shipper";
+        global $SHIPPER_TYPE;
+        $shipperList = array();
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $SHIPPER_TYPE) {
+                continue;
+            }
+            $shipper = json_decode($val[2], true);
 
-        try {
-            $result = $this->db->query($query);
-            $shipperList = array();
+            unset($shipper["Password"]);
 
-            while($row =  $result->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $shipper = array(
-                    "ShipperID" => (int) $row["ShipperID"] ,
-                    "Username" => $row["Username"],
-                    "ProfilePhoto" => $row["ProfilePhoto"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "DistributionHubID" => (int) $row["DistributionHubID"]
-                );
-                $shipperList[] = $shipper;
-             }
+            $shipperList[] = $shipper;
+        }
 
-            return $shipperList;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        return $shipperList;
     }
 
     public function findByUsername($username){
-        $query = "SELECT * FROM Shipper WHERE Username = :Username";
+        global $SHIPPER_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":Username" => $username]);
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $SHIPPER_TYPE) {
+                continue;
+            }
 
-            $shipper = array();
+            $shipper = json_decode($val[2], true);
 
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $shipper = array(
-                    "Username" => $row["Username"],
-                    "Password" => $row["Password"],
-                    "ShipperID" => (int) $row["ShipperID"],
-                    "ProfilePhoto" => $row["ProfilePhoto"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "DistributionHubID" => (int) $row["DistributionHubID"]
-                );
-             }
-
-            return $shipper;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($shipper["Username"] == $username) {
+                return $shipper;
+            }
+        }
     }
 
     public function findByShipperID($shipperID){
-        $query = "SELECT * FROM Shipper WHERE ShipperID = :ShipperID";
+        global $SHIPPER_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":ShipperID" => $shipperID]);
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $SHIPPER_TYPE) {
+                continue;
+            }
 
-            $shipper = array();
+            $shipper = json_decode($val[2], true);
 
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $shipper = array(
-                    "ShipperID" => $row["ShipperID"],
-                );
-             }
-
-            return $shipper;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($shipper["ShipperID"] == $shipperID) {
+                return $shipper;
+            }
+        }
     }
 
     public function create($username,$password,$distributionHubID, $profilePhoto)
     {
+
+        global $ACCOUNT_DATA_PATH, $SHIPPER_TYPE;
+
         $currentDateTime = gmdate("Y-m-d\TH:i:s\Z");
 
-        $query = "INSERT INTO Shipper(Username,Password,ProfilePhoto,DistributionHubID,CreatedAt,UpdatedAt) VALUES(:Username,:Password,:ProfilePhoto,:DistributionHubID,:CreatedAt,:UpdatedAt)";
+        $shipperID = count($this->db) + 1;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Username", $username);
-            $stmt->bindValue(":Password", $password);
-            $stmt->bindValue(":DistributionHubID", $distributionHubID);
-            $stmt->bindValue(":UpdatedAt", $currentDateTime);
-            $stmt->bindValue(":CreatedAt", $currentDateTime);
-            $stmt->bindValue(":ProfilePhoto", $profilePhoto);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
+        $newShipper = array(
+            "ShipperID" => $shipperID,
+            "Username" => $username,
+            "Password" => $password,
+            "DistributionHubID" => $distributionHubID,
+            "UpdatedAt" => $currentDateTime,
+            "CreatedAt" => $currentDateTime,
+            "ProfilePhoto" => $profilePhoto,
+        );
 
-    public function delete($shipperID){
-        $query = "DELETE FROM Shipper WHERE ShipperID = :ShipperID";
+        $this->db[] = array($shipperID, $SHIPPER_TYPE, json_encode($newShipper));
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":ShipperID", $shipperID);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        $rs = addDataToCsvFile($ACCOUNT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 
     public function update($username, $profilePhotoPath){
-        $query = "UPDATE Shipper SET ProfilePhoto = :ProfilePhoto WHERE Username = :Username";
+        global $ACCOUNT_DATA_PATH, $SHIPPER_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Username", $username);
-            $stmt->bindValue(":ProfilePhoto", $profilePhotoPath);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $SHIPPER_TYPE) {
+                continue;
+            }
+
+            $shipper = json_decode($val[2], true);
+
+            if ($shipper["Username"] == $username) {
+                $shipper["ProfilePhoto"] = $profilePhotoPath;
+                $this->db[$key] = array($val[0],$SHIPPER_TYPE, json_encode($shipper));
+                break;
+            }
+        }
+
+        $rs = addDataToCsvFile($ACCOUNT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 }

@@ -7,13 +7,6 @@ class DatabaseConnector  {
 
     public function __construct()
     {
-        // try {
-        //     $this->accountConnection = new SQLite3('./accounts.db');
-        //     $this->shopConnection = new SQLite3('./shop.db');
-        // } catch (Exception $e) {
-        //     echo 'Database exception: ' . $e->getMessage();
-        //     exit($e->getMessage());
-        // }
     }
 
     public function getAccountDbConnection()
@@ -37,5 +30,20 @@ class DatabaseConnector  {
             echo 'Database exception: ' . $e->getMessage();
             exit($e->getMessage());
         }
+    }
+
+    public function readAccountData(){
+        global $ACCOUNT_DATA_PATH;
+        return readCsvFile($ACCOUNT_DATA_PATH);
+    }
+
+    public function readProductData(){
+        global $PRODUCT_DATA_PATH ;
+        return readCsvFile($PRODUCT_DATA_PATH);
+    }
+
+    public function readOrderData(){
+        global $ORDER_DATA_PATH  ;
+        return readCsvFile($ORDER_DATA_PATH);
     }
 }

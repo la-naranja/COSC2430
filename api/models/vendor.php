@@ -12,184 +12,139 @@ class Vendor
 
 
     public function findAll(){
-        $query = "SELECT * FROM Vendor";
+        global $VENDOR_TYPE;
+        $vendorList = array();
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $VENDOR_TYPE) {
+                continue;
+            }
+            $vendor = json_decode($val[2], true);
 
-        try {
-            $result = $this->db->query($query);
-            $vendorList = array();
+            unset($vendor["Password"]);
 
-            while($row =  $result->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $vendor = array(
-                    "VendorID" => (int) $row["VendorID"] ,
-                    "Username" => $row["Username"],
-                    "BusinessName" => $row["BusinessName"],
-                    "ProfilePhoto" => $row["ProfilePhoto"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "BusinessAddress" => $row["BusinessAddress"]
-                );
-                $vendorList[] = $vendor;
-             }
+            $vendorList[] = $vendor;
+        }
 
-            return $vendorList;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        return $vendorList;
     }
 
     public function findByUsername($username){
-        $query = "SELECT * FROM Vendor WHERE Username = :Username";
+        global $VENDOR_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":Username" => $username]);
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $VENDOR_TYPE) {
+                continue;
+            }
 
-            $vendor = array();
+            $vendor = json_decode($val[2], true);
 
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $vendor = array(
-                    "Username" => $row["Username"],
-                    "Password" => $row["Password"],
-                    "VendorID" => (int) $row["VendorID"],
-                    "BusinessName" => $row["BusinessName"],
-                    "ProfilePhoto" => $row["ProfilePhoto"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "BusinessAddress" => $row["BusinessAddress"]
-                );
-             }
-
-            return $vendor;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($vendor["Username"] == $username) {
+                return $vendor;
+            }
+        }
     }
 
     public function findByBusinessAddress($businessAddress){
-        $query = "SELECT * FROM Vendor WHERE BusinessAddress = :BusinessAddress";
+        global $VENDOR_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":BusinessAddress" => $businessAddress]);
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $VENDOR_TYPE) {
+                continue;
+            }
 
-            $vendor = array();
+            $vendor = json_decode($val[2], true);
 
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $vendor = array(
-                    "BusinessAddress" => $row["BusinessAddress"],
-                );
-             }
-
-            return $vendor;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($vendor["BusinessAddress"] == $businessAddress) {
+                return $vendor;
+            }
+        }
     }
 
     public function findByBusinessname($businessName){
-        $query = "SELECT * FROM Vendor WHERE BusinessName = :BusinessName";
+        global $VENDOR_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":BusinessName" => $businessName]);
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $VENDOR_TYPE) {
+                continue;
+            }
 
-            $vendor = array();
+            $vendor = json_decode($val[2], true);
 
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $vendor = array(
-                    "BusinessName" => $row["BusinessName"],
-                );
-             }
-
-            return $vendor;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($vendor["BusinessName"] == $businessName) {
+                return $vendor;
+            }
+        }
     }
 
     public function findByVendorID($vendorID){
-        $query = "SELECT * FROM Vendor WHERE VendorID = :VendorID";
+        global $VENDOR_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":VendorID" => $vendorID]);
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $VENDOR_TYPE) {
+                continue;
+            }
 
-            $vendor = array();
+            $vendor = json_decode($val[2], true);
 
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $vendor = array(
-                    "VendorID" => $row["VendorID"],
-                );
-             }
-
-            return $vendor;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($vendor["VendorID"] == $vendorID) {
+                return $vendor;
+            }
+        }
     }
 
     public function create($username,$password,$name,$profilePhoto,$address)
     {
+        global $ACCOUNT_DATA_PATH, $VENDOR_TYPE;
+
         $currentDateTime = gmdate("Y-m-d\TH:i:s\Z");
 
-        $query = "INSERT INTO Vendor(Username,Password,ProfilePhoto,BusinessName,BusinessAddress,CreatedAt,UpdatedAt) VALUES(:Username,:Password,:ProfilePhoto,:BusinessName,:BusinessAddress,:CreatedAt,:UpdatedAt)";
+        $vendorID = count($this->db) + 1;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Username", $username);
-            $stmt->bindValue(":Password", $password);
-            $stmt->bindValue(":BusinessName", $name);
-            $stmt->bindValue(":UpdatedAt", $currentDateTime);
-            $stmt->bindValue(":CreatedAt", $currentDateTime);
-            $stmt->bindValue(":BusinessAddress", $address);
-            $stmt->bindValue(":ProfilePhoto", $profilePhoto);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
+        $newVendor = array(
+            "VendorID" => $vendorID,
+            "Username" => $username,
+            "Password" => $password,
+            "BusinessName" => $name,
+            "BusinessAddress" => $address,
+            "UpdatedAt" => $currentDateTime,
+            "CreatedAt" => $currentDateTime,
+            "ProfilePhoto" => $profilePhoto,
+        );
 
-    public function delete($vendorID){
-        $query = "DELETE FROM Vendor WHERE VendorID = :VendorID";
+        $this->db[] = array($vendorID, $VENDOR_TYPE, json_encode($newVendor));
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":VendorID", $vendorID);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        $rs = addDataToCsvFile($ACCOUNT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 
     public function update($username, $profilePhotoPath){
-        $query = "UPDATE Vendor SET ProfilePhoto = :ProfilePhoto WHERE Username = :Username";
+        global $ACCOUNT_DATA_PATH, $VENDOR_TYPE;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Username", $username);
-            $stmt->bindValue(":ProfilePhoto", $profilePhotoPath);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        foreach ($this->db as $key => $val) {
+            if ($val[1] !== $VENDOR_TYPE) {
+                continue;
+            }
+
+            $vendor = json_decode($val[2], true);
+
+            if ($vendor["Username"] == $username) {
+                $vendor["ProfilePhoto"] = $profilePhotoPath;
+                $this->db[$key] = array($val[0],$VENDOR_TYPE, json_encode($vendor));
+                break;
+            }
+        }
+
+        $rs = addDataToCsvFile($ACCOUNT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 }

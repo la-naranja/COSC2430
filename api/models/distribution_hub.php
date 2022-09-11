@@ -5,56 +5,32 @@ class DistributionHub
 
     private $db = null;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        $this->db = array();
+        $this->db[] = array("DistributionHubID" => 1, "Name"=> "LAX Express", "Address" => "67 Lê Lợi, Phường Bến Nghé, Quận 1, Tp. Hồ Chí Minh, Việt Nam");
+        $this->db[]= array("DistributionHubID" => 2, "Name"=> "LALA MOVE", "Address" => "146 Lý Thường Kiệt phường 12 quận Tân Bình tp Hồ Chí Minh Việt Nam");
     }
 
     public function findAll()
     {
-        $query = "select * from DistributionHub";
+        $distributionHubList = array();
+        foreach ($this->db as $key => $val) {
+            $distributionHubList[] = $val;
+        }
 
-        try {
-            $result = $this->db->query($query);
-            $orderStatusList = array();
-
-            while($row =  $result->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $orderStatus = array(
-                    "DistributionHubID" => (int) $row["DistributionHubID"] ,
-                    "Name" => $row["Name"],
-                    "Address" => $row["Address"],
-                );
-                $orderStatusList[] = $orderStatus;
-             }
-
-            return $orderStatusList;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        return $distributionHubList;
     }
 
     public function findByDistributionHubID($distributionHubID){
-        $query = "SELECT * FROM DistributionHub WHERE DistributionHubID = :DistributionHubID";
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":DistributionHubID" => $distributionHubID]);
-
-            $distributionHub = array();
-
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $distributionHub = array(
-                    "DistributionHubID" => $row["DistributionHubID"],
-                );
-             }
-
-            return $distributionHub;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        $distributionHub = array();
+    
+        foreach ($this->db as $key => $val) {
+            if ($val["DistributionHubID"] == $distributionHubID){
+                $distributionHub = $val;
+                return $distributionHub;
+            }
+        }
     }
 }

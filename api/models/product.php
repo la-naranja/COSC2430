@@ -12,114 +12,62 @@ class Product
 
 
     public function findAll(){
-        $query = "SELECT * FROM PRODUCT";
+        $productList = array();
+        foreach ($this->db as $key => $val) {
+            $product = json_decode($val[1], true);
 
-        try {
-            $result = $this->db->query($query);
-            $productList = array();
+            $productList[] = $product;
+        }
 
-            while($row =  $result->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $product = array(
-                    "ProductID" => (int) $row["ProductID"] ,
-                    "Name" => $row["Name"],
-                    "ImagePath" => $row["ImagePath"],
-                    "UpdatedAt" => $row["UpdatedAt"],
-                    "CreatedAt" => $row["CreatedAt"],
-                    "Price" => (float) $row["Price"],
-                    "Description" => $row["Description"],
-                );
-                $productList[] = $product;
-             }
-
-            return $productList;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        return $productList;
     }
 
     public function findByName($productName){
-        $query = "SELECT * FROM PRODUCT WHERE Name = :Name";
+        foreach ($this->db as $key => $val) {
+            $product = json_decode($val[1], true);
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":Name" => $productName]);
-
-            $product = array();
-
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $product = array(
-                    "Name" => $row["Name"],
-                );
-             }
-
-            return $product;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($product["Name"] == $productName) {
+                return $product;
+            }
+        }
     }
 
-    public function findByProductID($productName){
-        $query = "SELECT * FROM PRODUCT WHERE ProductID = :ProductID";
+    public function findByProductID($productID){
+        foreach ($this->db as $key => $val) {
+            $product = json_decode($val[1], true);
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([":ProductID" => $productName]);
-
-            $product = array();
-
-            while($row =  $stmt->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $product = array(
-                    "ProductID" => $row["ProductID"],
-                );
-             }
-
-            return $product;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+            if ($product["ProductID"] == $productID) {
+                return $product;
+            }
+        }
     }
 
     public function create($name,$imagePath,$price,$description)
     {
+        global $PRODUCT_DATA_PATH;
+
         $currentDateTime = gmdate("Y-m-d\TH:i:s\Z");
 
-        $query = "INSERT INTO Product(Name,ImagePath,UpdatedAt,CreatedAt,Price,Description) VALUES(:Name,:ImagePath,:UpdatedAt,:CreatedAt,:Price,:Description)";
+        $productID = count($this->db) + 1;
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":Name", $name);
-            $stmt->bindValue(":ImagePath", $imagePath);
-            $stmt->bindValue(":UpdatedAt", $currentDateTime);
-            $stmt->bindValue(":CreatedAt", $currentDateTime);
-            $stmt->bindValue(":Price", $price);
-            $stmt->bindValue(":Description", $description);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
-    }
+        $newproduct = array(
+            "ProductID" => $productID,
+            "Name" => $name,
+            "Price" => $price,
+            "ImagePath" => $imagePath,
+            "Description" => $description,
+            "UpdatedAt" => $currentDateTime,
+            "CreatedAt" => $currentDateTime
+        );
 
-    public function delete($productID){
-        $query = "DELETE FROM Product WHERE ProductID = :ProductID";
+        $this->db[] = array($productID, json_encode($newproduct));
 
-        try {
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(":ProductID", $productID);
-            $stmt->execute();
-    
-            return true;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        $rs = addDataToCsvFile($PRODUCT_DATA_PATH, $this->db);
+        if ($rs !== "") {
+            echo 'Exception: ' . $rs;
+            return;
+        }
+
+        return true;
     }
 }

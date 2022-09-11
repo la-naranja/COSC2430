@@ -2,16 +2,12 @@
 
 class ProductController
 {
-
-    private $db;
     private $requestMethod;
     private $productModel;
 
     public function __construct($db, $requestMethod)
     {
-        $this->db = $db;
         $this->requestMethod = $requestMethod;
-
         $this->productModel = new Product($db);
     }
 
@@ -23,9 +19,6 @@ class ProductController
                 break;
             case 'GET';
                 $response = $this->getProducts();
-                break;
-            case 'DELETE';
-                $response = $this->deleteProduct();
                 break;
             default:
                 $response = notFoundResponse();
@@ -89,23 +82,6 @@ class ProductController
         return $response;
     }
 
-    private function deleteProduct(){
-        global $BAD_REQUEST_STATUS_CODE, $SUCCESS_STATUS_CODE;
-        $input = json_decode(file_get_contents('php://input'), TRUE);
-
-        $error = $this-> validateProductID($input);
-        if ($error != ""){
-            $response['status_code_header'] = $BAD_REQUEST_STATUS_CODE;
-            $response['body'] = json_encode($error);
-            return $response;
-        }
-
-        $result = $this->productModel->delete($input["ProductID"]);
-        $response['status_code_header'] = $SUCCESS_STATUS_CODE;
-        $response['body'] = json_encode(defaultSuccessResponse());
-        return $response;
-    }
-
     private function validateCreateProductInputs($productName,$price){
         global $MISSING_REQUIRED_INPUTS_ERROR_CODE,$INVALID_PRICE_ERROR_CODE, $EXISTING_PRODUCT_NAME_ERROR_CODE,$INVALID_PRODUCT_NAME_ERROR_CODE,$INVALID_DESCRIPTION_ERROR_CODE;
 
@@ -128,21 +104,6 @@ class ProductController
         $result = $this->productModel->findByName($productName);
         if (isset( $result["Name"])){
             return errorResponse($EXISTING_PRODUCT_NAME_ERROR_CODE);
-        }
-
-        return "";
-    }
-
-    private function validateProductID($productID){
-        global $NON_EXISTING_PRODUCT_ERROR_CODE;
-
-        if (!isset($productID["ProductID"])){
-            return errorResponse($NON_EXISTING_PRODUCT_ERROR_CODE);
-        }
-
-        $result = $this->productModel->findByProductID($productID["ProductID"]);
-        if (!isset( $result["ProductID"])){
-            return errorResponse($NON_EXISTING_PRODUCT_ERROR_CODE);
         }
 
         return "";

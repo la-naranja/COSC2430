@@ -3,16 +3,14 @@
 
 class DistributionHubController {
 
-    private $db;
     private $requestMethod;
     private $distributionHubModel;
 
-    public function __construct($db, $requestMethod)
+    public function __construct($requestMethod)
     {
-        $this->db = $db;
         $this->requestMethod = $requestMethod;
 
-        $this->distributionHubModel = new DistributionHub($db);
+        $this->distributionHubModel = new DistributionHub();
     }
 
     public function processRequest()

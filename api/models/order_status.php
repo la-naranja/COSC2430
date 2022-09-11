@@ -5,32 +5,33 @@ class OrderStatus
 
     private $db = null;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        $this->db = array();
+        $this->db[] = array("OrderStatusID" => 1, "Label" => "active");
+        $this->db[] = array("OrderStatusID" => 2, "Label" => "delivered");
+        $this->db[] = array("OrderStatusID" => 3, "Label" => "canceled");
     }
 
     public function findAll()
     {
-        $query = "select * from OrderStatus";
+        $orderStatusList = array();
+        foreach ($this->db as $key => $val) {
+            $orderStatusList[] = $val;
+        }
 
-        try {
-            $result = $this->db->query($query);
-            $orderStatusList = array();
+        return $orderStatusList;
+    }
 
-            while($row =  $result->fetch(\PDO::FETCH_ASSOC) ) {
-                
-                $orderStatus = array(
-                    "OrderStatusID" => (int) $row["OrderStatusID"] ,
-                    "Label" => $row["Label"],
-                );
-                $orderStatusList[] = $orderStatus;
-             }
+    public function findByOrderStatusID($orderStatusID){
 
-            return $orderStatusList;
-        } catch (Exception $e) {
-            echo 'Database exception: ' . $e->getMessage();
-            exit($e->getMessage());
-        } 
+        $orderStatus = array();
+    
+        foreach ($this->db as $key => $val) {
+            if ($val["OrderStatusID"] == $orderStatusID){
+                $orderStatus = $val;
+                return $orderStatus;
+            }
+        }
     }
 }

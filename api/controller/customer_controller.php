@@ -24,9 +24,6 @@ class CustomerController
             case 'GET';
                 $response = $this->getCustomers();
                 break;
-            case 'DELETE';
-                $response = $this->deleteCustomer();
-                break;
             default:
                 $response = notFoundResponse();
                 break;
@@ -95,23 +92,6 @@ class CustomerController
         return $response;
     }
 
-    private function deleteCustomer(){
-        global $BAD_REQUEST_STATUS_CODE, $SUCCESS_STATUS_CODE;
-        $input = json_decode(file_get_contents('php://input'), TRUE);
-
-        $error = $this-> validateCustomerID($input);
-        if ($error != ""){
-            $response['status_code_header'] = $BAD_REQUEST_STATUS_CODE;
-            $response['body'] = json_encode($error);
-            return $response;
-        }
-
-        $result = $this->CustomerModel->delete($input["CustomerID"]);
-        $response['status_code_header'] = $SUCCESS_STATUS_CODE;
-        $response['body'] = json_encode(defaultSuccessResponse());
-        return $response;
-    }
-
     private function validateCreateCustomerInputs(){
         global $EXISTING_USERNAME_ERROR_CODE, $MISSING_REQUIRED_INPUTS_ERROR_CODE,$INVALID_ADDRESS_ERROR_CODE,$INVALID_NAME_ERROR_CODE;
 
@@ -146,21 +126,6 @@ class CustomerController
         $error = validateRequiredInput($address,$INVALID_ADDRESS_ERROR_CODE);
         if ($error != ""){
             return $error;
-        }
-
-        return "";
-    }
-
-    private function validateCustomerID($CustomerID){
-        global $NON_EXISTING_CUSTOMER_ERROR_CODE;
-
-        if (!isset($CustomerID["CustomerID"])){
-            return errorResponse($NON_EXISTING_CUSTOMER_ERROR_CODE);
-        }
-
-        $result = $this->CustomerModel->findByCustomerID($CustomerID["CustomerID"]);
-        if (!isset( $result["CustomerID"])){
-            return errorResponse($NON_EXISTING_CUSTOMER_ERROR_CODE);
         }
 
         return "";

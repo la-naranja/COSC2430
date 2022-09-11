@@ -24,9 +24,6 @@ class VendorController
             case 'GET';
                 $response = $this->getVendors();
                 break;
-            case 'DELETE';
-                $response = $this->deleteVendor();
-                break;
             default:
                 $response = notFoundResponse();
                 break;
@@ -95,23 +92,6 @@ class VendorController
         return $response;
     }
 
-    private function deleteVendor(){
-        global $BAD_REQUEST_STATUS_CODE, $SUCCESS_STATUS_CODE;
-        $input = json_decode(file_get_contents('php://input'), TRUE);
-
-        $error = $this-> validateVendorID($input);
-        if ($error != ""){
-            $response['status_code_header'] = $BAD_REQUEST_STATUS_CODE;
-            $response['body'] = json_encode($error);
-            return $response;
-        }
-
-        $result = $this->VendorModel->delete($input["VendorID"]);
-        $response['status_code_header'] = $SUCCESS_STATUS_CODE;
-        $response['body'] = json_encode(defaultSuccessResponse());
-        return $response;
-    }
-
     private function validateCreateVendorInputs(){
         global $EXISTING_USERNAME_ERROR_CODE, $MISSING_REQUIRED_INPUTS_ERROR_CODE,$INVALID_ADDRESS_ERROR_CODE,$INVALID_NAME_ERROR_CODE,$EXISTING_BUSINESS_NAME_ERROR_CODE,$EXISTING_BUSINESS_ADDRESS_ERROR_CODE;
 
@@ -154,21 +134,6 @@ class VendorController
         $result = $this->VendorModel->findByBusinessAddress($address);
         if (isset( $result["BusinessAddress"])){
             return errorResponse($EXISTING_BUSINESS_ADDRESS_ERROR_CODE);
-        }
-
-        return "";
-    }
-
-    private function validateVendorID($VendorID){
-        global $NON_EXISTING_VENDOR_ERROR_CODE;
-
-        if (!isset($VendorID["VendorID"])){
-            return errorResponse($NON_EXISTING_VENDOR_ERROR_CODE);
-        }
-
-        $result = $this->VendorModel->findByVendorID($VendorID["VendorID"]);
-        if (!isset( $result["VendorID"])){
-            return errorResponse($NON_EXISTING_VENDOR_ERROR_CODE);
         }
 
         return "";

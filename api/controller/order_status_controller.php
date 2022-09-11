@@ -3,17 +3,15 @@
 
 class OrderStatusController {
 
-    private $db;
     private $requestMethod;
     private $orderStatusModel;
     private $OrderModel;
 
     public function __construct($db, $requestMethod)
     {
-        $this->db = $db;
         $this->requestMethod = $requestMethod;
 
-        $this->orderStatusModel = new OrderStatus($db);
+        $this->orderStatusModel = new OrderStatus();
         $this->OrderModel = new Order($db);
     }
 
@@ -66,7 +64,9 @@ class OrderStatusController {
             return $response;
         }
 
-        $result = $this->OrderModel->updateOrderStatus($input["OrderID"], $input["OrderStatusID"]);
+        $status = $this->orderStatusModel->findByOrderStatusID($input["OrderStatusID"]);
+
+        $result = $this->OrderModel->updateOrderStatus($input["OrderID"], $status);
         $response['status_code_header'] = $SUCCESS_STATUS_CODE;
         $response['body'] = json_encode(defaultSuccessResponse());
         return $response;

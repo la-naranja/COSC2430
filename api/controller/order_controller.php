@@ -6,15 +6,17 @@ class OrderController
     private $OrderModel;
     private $CustomerModel;
     private $DistributionHubModel;
+    private $OrderStatusModel;
     private $ProductModel;
 
-    public function __construct($accountDb, $shopDb, $requestMethod)
+    public function __construct($orders,$accounts, $products, $requestMethod)
     {
         $this->requestMethod = $requestMethod;
-        $this->OrderModel = new Order($shopDb);
-        $this->ProductModel = new Product($shopDb);
-        $this->DistributionHubModel = new DistributionHub($shopDb);
-        $this->CustomerModel = new Customer($accountDb);
+        $this->OrderModel = new Order($orders);
+        $this->ProductModel = new Product($products);
+        $this->DistributionHubModel = new DistributionHub();
+        $this->OrderStatusModel = new OrderStatus();
+        $this->CustomerModel = new Customer($accounts);
     }
 
     public function processRequest()
@@ -25,9 +27,6 @@ class OrderController
                 break;
             case 'GET';
                 $response = $this->getOrders();
-                break;
-            case 'DELETE';
-                $response = $this->deleteOrder();
                 break;
             default:
                 $response = notFoundResponse();
@@ -55,11 +54,12 @@ class OrderController
 
         $total = (float) $input["Total"];
         $distributionHubID = $this->randomDistributionHub();
+        $distributionHub = $this->DistributionHubModel->findByDistributionHubID($distributionHubID);
         $customerID = (int) $input["CustomerID"];
-        $orderItems = (array) $input["OrderItems"];
-        $status = (int) $ORDER_ACTIVE_STATUS;
+        $orderItems = $this->formatOrderItems( $input["OrderItems"]);
+        $status = $this->OrderStatusModel->findByOrderStatusID(1);
 
-        $result = $this->OrderModel->create($customerID, $distributionHubID, $status, $total, $orderItems);
+        $result = $this->OrderModel->create($customerID, $distributionHub, $status, $total, $orderItems);
         $response['status_code_header'] = $CREATED_STATUS_CODE;
         $response['body'] = json_encode(defaultSuccessResponse());
         return $response;
@@ -80,26 +80,6 @@ class OrderController
         $response['body'] = json_encode($result);
         return $response;
     }
-
-    private function deleteOrder()
-    {
-        global $BAD_REQUEST_STATUS_CODE, $SUCCESS_STATUS_CODE;
-        $input = json_decode(file_get_contents('php://input'), true);
-
-        $error = $this->validateOrderID($input);
-        if ($error != "") {
-            $response['status_code_header'] = $BAD_REQUEST_STATUS_CODE;
-            $response['body'] = json_encode($error);
-            return $response;
-        }
-
-        $result = $this->OrderModel->delete($input["OrderID"]);
-        $response['status_code_header'] = $SUCCESS_STATUS_CODE;
-        $response['body'] = json_encode(defaultSuccessResponse());
-        return $response;
-    }
-
-
 
     private function validateCreateOrderInputs($input)
     {
@@ -179,5 +159,20 @@ class OrderController
     private function randomDistributionHub()
     {
         return rand(1, 2);
+    }
+
+    private function formatOrderItems($orderItems){
+        $updatedOrderItems = $orderItems;
+
+        foreach ($updatedOrderItems as $key => $value) {
+            
+            $product = $this->ProductModel->findByProductID($value["ProductID"]) ;
+
+            $updatedOrderItems[$key]["Name"] = $product["Name"];
+            $updatedOrderItems[$key]["ImagePath"] = $product["ImagePath"];
+            $updatedOrderItems[$key]["Price"] = $product["Price"];
+        }
+
+        return $updatedOrderItems;
     }
 }
