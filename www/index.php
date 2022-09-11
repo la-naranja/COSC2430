@@ -25,6 +25,7 @@
       </div>
     </div>
   </div>
+  <?php include "./template/footers/admin_footer.php"; ?>
     <script src="./js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -13,13 +13,15 @@
     <link href="../../css/login.css" rel="stylesheet">
 </head>
 <body>
-    <?php include "../../template/forms/login_form.php" ?>
+    <div class="container">
+            <?php include "../../template/forms/login_form.php" ?>
+        <button class="w-100 btn btn-lg btn-primary" onclick='login("customer","customers")'>Sign in</button>
 
-    <button class="w-100 btn btn-lg btn-primary" onclick='login("customer","customers")'>Sign in</button>
-    
-    <p class="my-4" >Not have an account? <a href="/customers/createAccount">Register</a></p> 
-     <p class="mt-5 mb-3 text-muted"><?php $year = date("Y"); echo "&copy; $year"; ?></p>
-    </main>
+            <p class="my-4" >Not have an account? <a href="/customers/createAccount">Register</a></p>
+            <p class="mt-5 mb-3 text-muted"><?php $year = date("Y"); echo "&copy; $year"; ?></p>
+            </main>
+            <?php include "../../template/footers/admin_footer.php"; ?>
+        </div>
 
     <script src="../../js/bootstrap.bundle.min.js"></script>
     <script src="../../constant/apiServices.js"></script>

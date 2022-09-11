@@ -12,12 +12,14 @@
     <link href="../../css/login.css" rel="stylesheet">
 </head>
 <body>
-    <?php include "../../template/forms/login_form.php" ?>
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <button class="w-100 btn btn-lg btn-primary" onclick='login("shipper","shippers")'>Sign in</button>
-    <p class="my-4" >Not have an account? <a href="/shippers/createAccount">Register</a></p> 
-    <p class="mt-5 mb-3 text-muted"><?php $year = date("Y"); echo "&copy; $year"; ?></p>
-    </main>
+    <div class="container">
+            <?php include "../../template/forms/login_form.php" ?>
+            <button class="w-100 btn btn-lg btn-primary" onclick='login("shipper","shippers")'>Sign in</button>
+            <p class="my-4" >Not have an account? <a href="/shippers/createAccount">Register</a></p>
+            <p class="mt-5 mb-3 text-muted"><?php $year = date("Y"); echo "&copy; $year"; ?></p>
+            </main>
+            <?php include "../../template/footers/admin_footer.php"; ?>
+        </div>
     <script src="../../constant/apiServices.js"></script>
     <script src="../../js/helpers.js"></script>
     <script src="../../js/login.js"></script>
