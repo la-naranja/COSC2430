@@ -11,7 +11,7 @@
     <div class="container">
       <div class="container">
         <div class="container border px-3 py-3">
-          <p class="h1 text-center">CREATE SHIPER ACCOUNT</p>
+          <p class="h1 text-center">CREATE SHIPPER ACCOUNT</p>
           <p class="h7 text-danger" id="error"></p>
           <div class="mb-3 row">
             <div class="col">
