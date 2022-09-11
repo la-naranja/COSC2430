@@ -58,6 +58,7 @@
     <script src="../js/customers.js"></script>
     <script src="../js/cartController.js"></script>
     <script src="../js/helpers.js"></script>
+    <script src="../js/header.js"></script>
 
 </body>
 

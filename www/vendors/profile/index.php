@@ -26,6 +26,7 @@
     <script src="../../js/helpers.js"></script>
     <script src="../../constant/apiServices.js"></script>
     <script src="../../js/updateProfilePhoto.js"></script>
+    <script src="../../js/header.js"></script>
 
 </body>
 

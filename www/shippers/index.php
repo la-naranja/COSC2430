@@ -41,6 +41,8 @@
     <script src="../constant/apiServices.js"></script>
     <script src="../js/shipper.js"></script>
     <script src="../js/helpers.js"></script>
+    <script src="../js/header.js"></script>
+
     <script>
       window.onload = authenticate("shipper", "shippers");
     </script>

@@ -29,6 +29,8 @@
     <script src="../../js/helpers.js"></script>
     <script src="../../constant/apiServices.js"></script>
     <script src="../../js/updateProfilePhoto.js"></script>
+    <script src="../../js/header.js"></script>
+
     <script>
       window.onload = function () {
         authenticate("shipper", "shippers");

@@ -69,6 +69,7 @@
     <script src="../js/helpers.js"></script>
     <script src="../js/vendors.js"></script>
     <script src="../js/addProduct.js"></script>
+    <script src="../js/header.js"></script>
     <script>
       window.onload = authenticate("vendor", "vendors");
     </script>
