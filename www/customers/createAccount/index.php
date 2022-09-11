@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Address</label>
+            <label class="form-label">Address (*)</label>
             <input
               type="text"
               class="form-control"
