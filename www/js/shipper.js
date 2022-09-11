@@ -2,36 +2,35 @@ let orderStatus = [];
 let orders = [];
 
 async function callAPI(method, url, onSuccess) {
-  const xhttp = new XMLHttpRequest();
-  const apiUrl = `${host}${url}`;
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      const responseJsonObj = JSON.parse(this.responseText);
-      onSuccess(responseJsonObj);
-    }
-  };
-  xhttp.open(method, apiUrl, true);
-  xhttp.send();
+    const xhttp = new XMLHttpRequest();
+    const apiUrl = `${host}${url}`;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            const responseJsonObj = JSON.parse(this.responseText);
+            onSuccess(responseJsonObj);
+        }
+    };
+    xhttp.open(method, apiUrl, true);
+    xhttp.send();
 }
 
 function renderItemDetails(item) {
-  let htmlProfile = "";
-  let orderDetailsHTML = "";
-  for (let itemDetails of item.OrderDetails) {
-    const orderDetails = JSON.parse(itemDetails);
-    for (let order of orderDetails) {
-      for (let property in order) {
-        orderDetailsHTML += `<div class="row"><div class="col-sm-3"><p class="mb-0">${property}</p></div><div class="col-sm-9"><p class="text-muted mb-0">${order[property]}</p></div></div><hr/>`;
-      }
+    let htmlProfile = "";
+    let orderDetailsHTML = "";
+    for (let itemDetails of item.OrderDetails) {
+        const orderDetails = itemDetails;
+        for (let property in orderDetails) {
+            orderDetailsHTML += `<div class="row"><div class="col-sm-3"><p class="mb-0">${property}</p></div><div class="col-sm-9"><p class="text-muted mb-0">${orderDetails[property]}</p></div></div><hr/>`;
+        }
+
     }
-  }
-  for (const property in item) {
-    if (property === "OrderDetails" || property === "Status") {
-      continue;
+    for (const property in item) {
+        if (property === "OrderDetails" || property === "Status") {
+            continue;
+        }
+        htmlProfile += `<div class="row"><div class="col-sm-3"><p class="mb-0">${property}</p></div><div class="col-sm-9"><p class="text-muted mb-0">${item[property]}</p></div></div><hr/>`;
     }
-    htmlProfile += `<div class="row"><div class="col-sm-3"><p class="mb-0">${property}</p></div><div class="col-sm-9"><p class="text-muted mb-0">${item[property]}</p></div></div><hr/>`;
-  }
-  htmlProfile = `${htmlProfile}${`<div class="row"><div class="col-sm-3"><p class="mb-0">Order Details</p></div><div class="col-sm-9"><p class="text-muted mb-0">${orderDetailsHTML}</p></div></div><hr/>`}`;
+    htmlProfile = `${htmlProfile}${`<div class="row"><div class="col-sm-3"><p class="mb-0">Order Details</p></div><div class="col-sm-9"><p class="text-muted mb-0">${orderDetailsHTML}</p></div></div><hr/>`}`;
   return htmlProfile;
 }
 
