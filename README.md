@@ -2,9 +2,7 @@
 
 COSC2430 WEB PROGRAMMING
 Full-stack Web Application
-Group 26:
-+ Son Le (s3757823) = 4
-+ Tri Truong (s3878145) = 6
+Group 26
 
 ## General
 
