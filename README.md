@@ -17,9 +17,8 @@ Group 26
 ### Configure Application
 
 * Install required tools
-    * PHP (7.4.26): https://sourceforge.net/projects/wampserver
+    * PHP (7.4.26): https://www.php.net/downloads.php (Notes: Please choose the PHP version compatible with your OS)
     * Postman (for testing web service in PHP): https://www.postman.com/downloads/
-* Go to `/wam64/www` folder
 * Clone the project this project using the following commands:
 ```
 https://github.com/llstyl1hs/COSC2430.git
